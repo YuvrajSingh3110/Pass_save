@@ -6,7 +6,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -18,8 +17,8 @@ class PassViewModel(
 ): ViewModel() {
     private val _sortType = MutableStateFlow(SortType.Title)
     private val _pass = _sortType
-        .flatMapLatest {_sortType->
-            when(_sortType){
+        .flatMapLatest { sortType->
+            when(sortType){
                 SortType.Title -> dao.orderByTitle()
                 SortType.Pass -> dao.orderByPass()
             }
